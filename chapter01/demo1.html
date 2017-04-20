@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Document</title>
+</head>
+<body>
+
+	<script>
+		var checkObject=new Function();
+		checkObject.addMethod=function(name,fn){
+			this.prototype[name]=fn;
+			return this;
+		}
+		debugger
+		checkObject.addMethod('checkName',function(){
+			document.write("checkname");
+			return this;
+		})
+		.addMethod('checkEmail',function(){
+				document.write('checkEmail')
+				return this;
+		})
+		var myCheckObj=new checkObject();
+		myCheckObj.checkName().checkEmail();
+
+
+	</script>
+</body>
+</html>

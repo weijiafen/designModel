@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简单工厂模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//将若干类似的类抽象到一个工厂方法中，再根据不同的属性做不同的操作
+		var popFactory=function(type,msg){
+			var o=new Object();
+			o.msg=msg;
+			o.show=function(){
+				alert("show"+o.type);
+			}
+			if(type==="alert"){
+				o.type="alert"
+			}
+			else if(type==="confirm"){
+				o.type==="confirm"
+			}
+			else if(type==="prompt"){
+				o.type="prompt"
+			}
+			return o
+		}
+		var pop1=popFactory("confirm","确认框啊")
+		console.log(pop1)
+	</script>
+</body>
+</html>

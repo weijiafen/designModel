@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>代理模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//使用image.src向服务器跨域发送get请求
+		var Count=(function(){
+			var img=new Image();
+			return function(param){
+				var str='https://www.zhihu.com/?';
+				for(var i in param){
+					str+=i+"="+param[i]
+				}
+				img.src=str;
+			}
+		})()
+		Count({num:10})
+		//jsonp方式，使用script标签发送跨域请求并定义回调函数，需要服务端配合
+		//代理模板iframe，讲道理看不懂。
+	</script>
+</body>
+</html>

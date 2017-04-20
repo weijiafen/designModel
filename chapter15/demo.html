@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>享元模式</title>
+</head>
+<body>
+	<div id="container"></div>
+	<div id="next_page">下一页</div>
+	<script type="text/javascript">
+		var artical=[
+			"新闻标题1",
+			"新闻标题2",
+			"新闻标题3",
+			"新闻标题4",
+			"新闻标题5",
+			"新闻标题6",
+			"新闻标题7",
+		]
+		//享元类，保存内部数据和内部方法
+		//提供了固定在页面上的dom节点，只替换数据而不更改dom结构
+		var FlyWeight=(function(){
+			var created=[];
+			function create(){
+				var dom=document.createElement("div");
+				document.getElementById('container').appendChild(dom);
+				created.push(dom);
+				return dom;
+			}
+			return {
+				getDiv:function(){
+					console.log(created)
+					if(created.length<5){
+						return create();
+					}
+					else{
+						var dom=created.shift();
+						created.push(dom);
+						return dom;
+					}
+				}
+			}
+		})()//此处应该是一个自执行方法，或者执行后保存在变量内，书本中代码有误。享元类应该实例化后才能提供getDiv方法
+		var paper=0,
+			num=5,
+			len=artical.length;
+		for(var i=0;i<num;i++){
+			FlyWeight.getDiv().innerHTML=artical[i]
+		}
+		document.getElementById('next_page').onclick=function(){
+			if(len<5){
+				return 
+			}
+			else{
+				var n=++paper*num%len;
+				var j;
+				for(j=0;j<num;j++){
+					//如果队尾足够长则直接替换
+					if(artical[n+j]){
+						FlyWeight.getDiv().innerHTML=artical[n+j]
+					}
+					//如果队尾不够长则从头开始取内容
+					else if(artical[n+j-len]){
+						FlyWeight.getDiv().innerHTML=artical[n+j-len]
+					}else{
+						//这里几乎不会执行
+					}
+					
+				}
+			}
+		}
+	</script>
+</body>
+</html>

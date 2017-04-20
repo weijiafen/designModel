@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组合模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//将对象组合成树形结构以表示“部分整体”的层次结构。
+
+		//组合寄生继承
+		function inheritObj(o){
+			var F=function(){};
+			F.prototype=o;
+			return new F();
+		}
+		function inheritPrototype(subClass,superClass){
+			var p=inheritObj(superClass.prototype);
+			p.constructor=subClass;
+			subClass.prototype=p;
+		}
+		//抽象类
+		var News=function(){
+			this.child=[];
+			this.element=null
+		}
+		News.prototype={
+			init:function(){
+				throw new Error("请重写方法")
+			},
+			add:function(){
+				throw new Error("请重写方法")
+			},
+			getElement:function(){
+				throw new Error("请重写方法")
+			}
+		}
+		//容器类
+		var Container=function(id,parant){
+			News.call(this);
+			this.id=id;
+			this.parant=parant;
+			this.init();
+		}
+		inheritPrototype(Container,News);
+		Container.prototype.init=function(){
+			this.element=document.createElement("ul");
+			this.element.id=this.id;
+			this.element.className="new-container"
+		}
+		Container.prototype.add=function(child){
+			this.child.push(child);
+			this.element.appendChild(child.getElement());
+			return this;
+		}
+		Container.prototype.getElement=function(){
+			return this.element
+		}
+		Container.prototype.show=function(){
+			this.parant.appendChild(this.element)
+		}
+		//新闻条目类
+		var NewsItem=function(className){
+			News.call(this);
+			this.className=className||'';
+			this.init();
+		}
+		inheritPrototype(NewsItem,News);
+		NewsItem.prototype.init=function(){
+			this.element=document.createElement('li');
+			this.element.className=this.className;
+		}
+		NewsItem.prototype.add=function(child){
+			this.child.push(child);
+			this.element.appendChild(child.getElement());
+			return this;
+		}
+		NewsItem.prototype.getElement=function(){
+			return this.element;
+		}
+
+		//组合新闻类
+		var NewsGroup=function(className){
+			News.call(this);
+			this.className=className||'';
+			this.init();
+		}
+		inheritPrototype(NewsGroup,News);
+		NewsGroup.prototype.init=function(){
+			this.element=document.createElement('div');
+			this.element.className=this.className;
+		}
+		NewsGroup.prototype.add=function(child){
+			this.child.push(child);
+			this.element.appendChild(child.getElement());
+			return this;
+		}
+		NewsGroup.prototype.getElement=function(){
+			return this.element;
+		}
+
+		//图片新闻类
+		var ImageNews=function(url,href,className){
+			News.call(this);
+			this.url=url||''
+			this.href=href||''
+			this.className=className||'';
+			this.init();
+		}
+		inheritPrototype(ImageNews,News);
+		ImageNews.prototype.init=function(){
+			this.element=document.createElement('a');
+			this.element.href=this.href;
+			var img=new Image();
+			img.src=this.url;
+			this.element.appendChild(img);
+			this.element.className=this.className;
+		}
+		ImageNews.prototype.getElement=function(){
+			return this.element;
+		}
+		//文字新闻类
+		var TextNews=function(txt,href,className){
+			News.call(this);
+			this.txt=txt||'';
+			this.href=href||'';
+			this.className=className||''
+			this.init();
+		}
+		inheritPrototype(TextNews,News);
+		TextNews.prototype.init=function(){
+			this.element=document.createElement('a');
+			this.element.className=this.className;
+			this.element.href=this.href
+			this.element.innerHTML=this.txt;
+			
+		}
+		TextNews.prototype.getElement=function(){
+			return this.element;
+		}
+		//新建一个容器类ul，并在容器中添加新闻条目类li，新闻条目类中再具体添加新闻类
+		var container=new Container("container",document.body);
+		container.add(
+			new NewsItem().add(new ImageNews('http://inews.gtimg.com/newsapp_ls/0/1047311714/0','#','ImageNews1'))
+		).add(
+			new NewsItem().add(
+					new NewsGroup().add(
+							new ImageNews('http://inews.gtimg.com/newsapp_ls/0/1047311714/0','#','ImageNews1')
+						).add(
+							new TextNews('文字新闻','#','classNameTest')
+						)
+				)
+		).show();
+	</script>
+</body>
+</html>

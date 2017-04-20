@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>面向对象编程</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var Book=(function(){
+			//闭包创建对象
+			//静态私有变量
+			var bookNum=0;
+			//构造方法
+			var _book=function(id,name,price){
+				//私有变量
+				var productPrice;
+				//私有方法
+				var getProductPrice=function(){
+
+				}
+				//公有变量
+				this.id=id;
+				this.name=name;
+				this.price=price;
+				//特权方法
+				this.getBookNum=function(){}
+			}
+			_book.prototype={
+				//静态公有属性/方法
+				isChinese:true,
+				display:function(){}
+			}
+			return _book;
+		})();
+		var book1=new Book(1,"javascript",68)
+		console.log(book1)
+	</script>
+</body>
+</html>

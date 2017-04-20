@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>构造函数继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function superClass(param){
+			this.id=param;
+		}
+		superClass.prototype.greet=function(){
+			alert("hello")
+		}
+		function subClass(param){
+			superClass.call(this,param);
+		}
+		var son=new subClass(1);
+		son.greet();
+	</script>
+</body>
+</html>

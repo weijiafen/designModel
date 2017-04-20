@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>外观模式</title>
+</head>
+<body>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<script type="text/javascript">
+		//将多种兼容方法包装在一个方法或对象内
+		var addEvent=function(ele,type,fn){
+			if(ele.addEventListener){
+				ele.addEventListener(type,fn,false)
+			}
+			else if(ele.attachEvent){
+				ele.attachEvent("on"+type,type);
+			}
+			else{
+				ele["on"+type]=fn
+			}
+		}
+		addEvent(document.body,'click',function(){alert("click")})
+	</script>
+</body>
+</html>

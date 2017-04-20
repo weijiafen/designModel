@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>桥接模式</title>
+</head>
+<body>
+	<span>1</span>
+	<span>2</span>
+	<script type="text/javascript">
+	//将类似的逻辑操作抽象到changeColor中，再在原匿名函数中调用，达到代码解耦
+		var spans=document.getElementsByTagName('span');
+		spans[0].onmouseover=function(){
+			changeColor(this,'red','white')
+		}
+		spans[1].onmouseover=function(){
+			changeColor(this,'yellow','green')
+		}
+		function changeColor(target,bg,color){
+			target.style.color=color;
+			target.style.backgroundColor=bg;
+		}
+	//多元化对象，与建造者模式十分像。桥接模式关注的是解耦，建造者模式关注的是创建
+	//抽象出一个移动对象
+	function Speed(x,y){
+		this.x=x;
+		this.y=y
+	}
+	Speed.prototype.run=function(){
+		console.log('run')
+	}
+
+	//抽象出一个颜色对象
+	function Color(cl){
+		this.color=cl;
+	}
+	Color.prototype.draw=function(){
+		console.log('draw')
+	}
+
+	//抽象一个说话对象
+	function Speek(wd){
+		this.word=wd;
+	}
+	Speek.prototype.say=function(){
+		console.log('say');
+	}
+
+	//新建一个球类，将移动和颜色对象桥接成为球类属性
+	function Ball(x,y,cl){
+		this.speed=new Speed(x,y);
+		this.color=new Color(cl);
+	}
+	//新建一个人类，将移动和说话对象桥接为人类属性。
+	function Human(x,y,wd){
+		this.speed=new Speed(x,y);
+		this.speek=new Speek(wd);
+	}
+	</script>
+</body>
+</html>

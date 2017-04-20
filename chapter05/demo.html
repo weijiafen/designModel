@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>抽象工厂模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//抽象工厂
+		var VehicleFactory=function(subClass,superClass){
+			if(typeof VehicleFactory[superClass] ==="function"){
+				//如果抽象工厂存在此属性，即存在此类，将子类寄生继承此父类
+				var f=function(){};
+				f.prototype=new VehicleFactory[superClass]();
+				subClass.constructor=subClass;
+				subClass.prototype=new f();
+			}else{
+				throw new Error("不存在此抽象类")
+			}
+		}
+		//汽车抽象类
+		VehicleFactory.Car=function(){
+			this.type='car'
+		}
+		//为汽车添加抽象方法。子类必须重写此方法才能使用
+		VehicleFactory.Car.prototype.getPrice=function(){
+			return new Error("抽象方法不能调用")
+		}
+		var BMW=function(price,speed){
+			this.price=price;
+			this.speed=speed;
+		}
+		VehicleFactory(BMW,'Car');
+		var x1=new BMW(800000,120) 
+		</script>
+</body>
+</html>

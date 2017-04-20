@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>原型模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//父类
+		var LoopImg=function(imgs,container){
+			this.imgs=imgs;
+			this.container=container;
+		}
+		//父类原型链
+		LoopImg.prototype.getImage=function(i){
+			console.log("get images of index "+i);
+		}
+		LoopImg.prototype.changeImage=function(){
+			console.log("default loop");
+		}
+
+		//子类组合继承父类
+		var SliderLoop=function(imgs,container){
+			LoopImg.call(this,imgs,container);
+		}
+		SliderLoop.prototype=new LoopImg();
+		SliderLoop.prototype.changeImage=function(){
+			console.log("SliderLoop")
+		}
+
+		//子类组合继承父类
+		var FadeLoop=function(imgs,container){
+			LoopImg.call(this,imgs,container);
+		}
+		FadeLoop.prototype=new LoopImg();
+		FadeLoop.prototype.changeImage=function(){
+			console.log("FadeLoop")
+		}
+		
+
+
+	</script>
+</body>
+</html>

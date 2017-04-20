@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>类式继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function superClass(a){
+			this.firstName="wei";
+			this.lastName="jiafen"
+		}
+		superClass.prototype.greet=function(){
+			console.log("hello"+this.lastName)
+		}
+		function subClass(){
+			this.lastName="junbin"
+		}
+		subClass.prototype=new superClass();
+		var son=new subClass();
+		son.greet();
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>建造者模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var Human=function(skill){
+			this.skill=skill
+		}
+		var Work=function(work){
+			this.work=work;
+		}
+		Work.prototype.working=function(){
+			console.log("i am working")
+		}
+		var Name=function(name){
+			this.name=name;
+			if(name.indexOf(" ")>-1){
+				this.firstName=name.slice(0,name.indexOf(" "))
+				this.secondName=name.slice(name.indexOf(" "))
+			}
+		}
+		var Employee=function(skill,name,work){
+			//缓存一个主体类，将其他模块座位主体的属性
+			var people=new Human(skill);
+			people.name=new Name(name);
+			people.work=new Work(work);
+			return people;
+		}
+		var e1=new Employee("coding","wade","fe")
+	</script>
+</body>
+</html>

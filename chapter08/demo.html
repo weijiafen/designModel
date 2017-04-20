@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>单例模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//创建一个控制静态变量的单例对象，通过特权方法去获取私有变量，模仿出静态变量一旦创建就只能读取不能修改的特性
+		var Conf=(function(){
+			var conf={
+				MAX_VALUE:9999,
+				MIN_VALUE:1
+			}
+			return {
+				get:function(key){
+					return conf[key]?conf[key]:null;
+				}
+			}
+		})();
+		console.log(Conf.get('MAX_VALUE'))
+
+		//创建一个惰性单例。必须执行后才会创建的单例对象。
+		var LazySingle=(function(){
+			var instance=null;
+			var Single=function(){
+				return {
+					publi_value:9999,
+					public_method:1
+				}
+			}
+			return function(){
+				if(!instance){
+					instance=new Single();
+				}
+				return instance;
+				
+			}
+		})();
+		var conf=LazySingle();
+		var conf2=LazySingle();
+		conf2.publi_value=8888
+		console.log(conf.publi_value)
+	</script>
+</body>
+</html>

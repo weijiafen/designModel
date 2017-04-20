@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>装饰者模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//通过一个装饰者，为目标添加一个点击事件方法，并不影响到以前添加的方法
+		var decorator=function(id,fn){
+			var target=document.getElementById(id);
+			if(typeof target.onclick==='function'){
+				var clickEvent=target.onclick;
+				target.onclick=function(){
+					clickEvent();
+					fn();
+				}
+			}
+			else{
+				target.onclick=fn;
+			}
+		}
+		decorator("test",function(){
+			//为id为test的元素添加点击事件方法
+		})
+	</script>
+</body>
+</html>

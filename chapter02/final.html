@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>寄生组合继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function superClass(param){
+			this.param=param
+		}
+		superClass.prototype.greet=function(){
+			alert("hello")
+		}
+		function inheritObj(o){
+			var F=function(){};
+			F.prototype=o;
+			return new F();
+		}
+		function inheritPrototype(subClass,superClass){
+			var p=inheritObj(superClass.prototype);
+			p.constructor=subClass;
+			subClass.prototype=p;
+		}
+		function subClass(){
+			superClass.call(this,"wade")
+		}
+		inheritPrototype(subClass,superClass)
+		var son=new subClass();
+		console.log(subClass instanceof superClass)
+		son.greet()
+	</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>工厂方法模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//工厂类只接受参数，具体的构造函数放在了原型上，这样每次添加类只需在原型上添加
+		var Factory=function(type,content){
+			//安全模式可以预防错误地使用工厂方法
+			if(this instanceof Factory){
+				var s=new this[type](content);
+				return s;
+			}else{
+				return new Factory(type,content)
+			}
+		}
+		Factory.prototype={
+			Java:function(content){
+				this.type="java";
+				this.content=content
+			}
+		}
+		var lesson=Factory("Java","i am java")
+		console.info(lesson)
+		debugger
+	</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>寄生继承</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function superClass(param){
+			this.param=param
+		}
+		superClass.prototype.greet=function(){
+			alert("hello"+this.name)
+		}
+		function inheritObj(o){
+			//原型继承
+			var F=function(){};
+			F.prototype=o;
+			return new F();
+		}
+		function createBook(name){
+			//扩展原型继承
+			var o=inheritObj(new superClass("wade"));
+			o.name=name;
+			return o;
+		}
+		var book=createBook("js");
+		book.greet()
+	</script>
+</body>
+</html>

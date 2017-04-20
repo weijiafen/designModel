@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>命令模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//命令类，通过Action提供方法，用excute方法暴露出去
+		var ViewCommand=function(){
+			var Action={
+				create:function(data){
+					if(data.length){
+						for(var i=0,len=data.length;i<len;i++){
+							html+=formatString(tpl['product'],data[i])
+						}
+					}else{
+						html+=formatString(tpl['product'],data)
+					}
+					
+					console.log(html)
+				},
+				display:function(data){
+					Action.create(data);
+				}
+			}
+			var html='';
+			var tpl={
+				product:[
+					'<div>',
+						'<p>{#text#}</p>',
+					'</div>'
+				].join(''),
+				//***join是模板引擎的重点，将模板用数组的方式可以缩进书写，再用join方法转化为字符串
+				title:[]
+			}
+			function formatString(str,obj){
+				return str.replace(/\{#(\w+)#\}/g,function(match,key){
+					return obj[key]
+				})
+			}
+			return function excute(msg){
+				Action[msg.command].apply(Action,msg.params)
+			}
+		}()
+		ViewCommand({
+			command:'display',
+			params:[[
+				{
+					text:'123'
+				},{
+					text:'456'
+				}]
+			]
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>状态模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+	//超级玛丽状态类
+		var SuperMarry=function(){
+			var x=0,y=0,speed=5;
+			//保存当前状态，每个状态为一个属性名，值为true
+			var _currentState={};
+			var me=this;
+			var State={
+				//每个状态绑定一个方法
+				jump:function(){
+					y+=5;
+					console.log('jump start');
+					loaction();
+					y-=5;
+					console.log('jump end')
+					loaction();
+				},
+				move:function(){
+					x+=5;
+					console.log('move')
+					loaction()
+				}
+			}
+			//打印当前坐标
+			var loaction=function(){
+				console.log("x:"+x+",y:"+y);
+			}
+			var Action={
+				//提供修改状态接口，将每个状态保存到_currentState
+				changeState:function(){
+					var args=arguments;
+					//每次修改状态都重置当前状态
+					_currentState={};
+					var len=args.length;
+					if(len>=0){
+						for(var i=0;i<len;i++){
+							_currentState[args[i]]=true
+						}	
+					}
+					return this
+				},
+				//提供触发状态修改接口，将所有状态所绑定方法执行一遍
+				gose:function(){
+					console.log('触发动作');
+					for(var i in _currentState){
+						State[i]&&State[i]();
+					}
+				}
+			}
+			return Action
+		}
+		var m=new SuperMarry();
+		m.changeState('move').gose()
+	</script>
+</body>
+</html>

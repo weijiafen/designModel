@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>策略模式</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//策略模式类，类似状态模式，但对象内封装的是一个个算法，在需要时通过接口调用
+		var PriceStrategy=function(){
+			var Strategy={
+				return30:function(price){
+					return +price-parseInt(price/100)*30
+				},
+				return50:function(price){
+					return +price-parseInt(price/100)*50
+				}
+			}
+			//返回提供接口的对象
+			return{
+				//获取价格接口
+				getPrice:function(type,price){
+				return Strategy[type]&&Strategy[type](price);
+				},
+				//扩展策略类算法的接口
+				addStrategy:function(type,fn){
+					Strategy[type]=fn;
+				}
+			}
+		}()
+		var p1=PriceStrategy.getPrice('return50',500);
+	</script>
+</body>
+</html>
